@@ -18,29 +18,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="light-mode" style={{colorScheme: 'light'}}>
+    <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content="light only" />
-        <meta name="theme-color" content="#ffffff" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#ffffff" />
-        <script dangerouslySetInnerHTML={{__html: `
-          (function() {
-            document.documentElement.style.cssText = 'background:#ffffff!important;color:#1e293b!important;color-scheme:light!important';
-            document.documentElement.classList.add('force-light');
-          })();
-        `}} />
-        <style dangerouslySetInnerHTML={{__html: `
-          html, html.force-light, body { 
-            background: #ffffff !important; 
-            color: #1e293b !important;
-            color-scheme: light !important;
-          }
-          html *, body * {
-            color-scheme: light !important;
-          }
-        `}} />
+        <meta name="theme-color" content="#1B4965" />
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
         <script
@@ -54,7 +35,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`} style={{background: '#ffffff', color: '#1e293b'}}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>
     </html>

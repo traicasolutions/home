@@ -11,43 +11,23 @@
   --success-color: #8DC63F;
   --gradient-start: #1B4965;
   --gradient-end: #2A5F7F;
-  color-scheme: light only;
 }
 
 html {
   max-width: 100vw;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  color-scheme: light only;
-  background: #ffffff;
 }
 
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  color: #1e293b !important;
-  background: #ffffff !important;
+  color: var(--text-primary);
+  background: var(--background);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-}
-
-/* Force light mode - override any dark mode preferences */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: light only;
-  }
-  
-  html {
-    background: #ffffff !important;
-    color-scheme: light only;
-  }
-  
-  body {
-    background: #ffffff !important;
-    color: #1e293b !important;
-  }
 }
 
 * {
@@ -74,24 +54,9 @@ button {
 
 input, textarea, select {
   font-family: inherit;
+  background: white;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
 }
 
-/* Ultra-aggressive light mode enforcement for all browsers including Samsung Internet */
-* {
-  color-scheme: light !important;
-}
-
-html, body, #__next, [data-theme], [data-color-scheme] {
-  background: #ffffff !important;
-  color: #1e293b !important;
-  color-scheme: light !important;
-}
-
-/* Override any webkit/Samsung specific dark mode */
-@supports (-webkit-appearance: none) {
-  html, body {
-    -webkit-color-scheme: light !important;
-    color-scheme: light !important;
-  }
-}
 

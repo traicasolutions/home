@@ -1,8 +1,7 @@
 /* Page Container */
 .page {
   min-height: 100vh;
-  background: #ffffff !important;
-  color: #1e293b !important;
+  background: white;
 }
 
 /* Hero Section */
@@ -12,7 +11,7 @@
   align-items: center;
   justify-content: center;
   background: rgb(250, 250, 250);
-  color: var(--text-primary);
+  color: #1e293b;
   text-align: center;
   padding: 2rem;
   position: relative;
@@ -149,8 +148,7 @@
 /* Services Section */
 .services {
   padding: 6rem 0;
-  background: #f8fafc !important;
-  color: #1e293b !important;
+  background: #f8fafc;
 }
 
 .serviceGrid {
@@ -161,8 +159,7 @@
 }
 
 .serviceCard {
-  background: #ffffff !important;
-  color: #1e293b !important;
+  background: white;
   padding: 2.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -216,8 +213,7 @@
 /* About Section */
 .about {
   padding: 6rem 0;
-  background: #ffffff !important;
-  color: #1e293b !important;
+  background: white;
 }
 
 .aboutContent {
@@ -269,8 +265,7 @@
 /* Contact Section */
 .contact {
   padding: 6rem 0;
-  background: #f8fafc !important;
-  color: #1e293b !important;
+  background: #f8fafc;
 }
 
 .contactContent {
