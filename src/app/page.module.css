@@ -1,6 +1,8 @@
 /* Page Container */
 .page {
   min-height: 100vh;
+  background: #ffffff !important;
+  color: #1e293b !important;
 }
 
 /* Hero Section */
@@ -147,7 +149,8 @@
 /* Services Section */
 .services {
   padding: 6rem 0;
-  background: var(--background-light);
+  background: #f8fafc !important;
+  color: #1e293b !important;
 }
 
 .serviceGrid {
@@ -158,12 +161,13 @@
 }
 
 .serviceCard {
-  background: white;
+  background: #ffffff !important;
+  color: #1e293b !important;
   padding: 2.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-  border: 1px solid var(--border-color);
+  border: 1px solid #e2e8f0;
 }
 
 .serviceCard:hover {
@@ -212,7 +216,8 @@
 /* About Section */
 .about {
   padding: 6rem 0;
-  background: white;
+  background: #ffffff !important;
+  color: #1e293b !important;
 }
 
 .aboutContent {
@@ -264,7 +269,8 @@
 /* Contact Section */
 .contact {
   padding: 6rem 0;
-  background: var(--background-light);
+  background: #f8fafc !important;
+  color: #1e293b !important;
 }
 
 .contactContent {
