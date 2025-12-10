@@ -1,8 +1,69 @@
+'use client';
+
+import { useState } from 'react';
 import styles from "./page.module.css";
 
 const basePath = process.env.NODE_ENV === 'production' ? '/traica-solutions-page' : '';
 
 export default function Home() {
+  const [formStatus, setFormStatus] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    // Validate that at least one course is selected
+    const selectedCourses = formData.getAll('entry.1618973613');
+    if (selectedCourses.length === 0) {
+      setFormStatus('error');
+      document.getElementById('registration')?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      setTimeout(() => {
+        setFormStatus('');
+      }, 5000);
+      return;
+    }
+
+    try {
+      // Submit to Google Forms in the background
+      await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      });
+
+      // Show success message
+      setFormStatus('success');
+      form.reset();
+
+      // Scroll to the registration section to show the message
+      document.getElementById('registration')?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      // Hide message after 15 seconds
+      setTimeout(() => {
+        setFormStatus('');
+      }, 15000);
+    } catch (error) {
+      setFormStatus('error');
+      
+      // Scroll to show error message
+      document.getElementById('registration')?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      setTimeout(() => {
+        setFormStatus('');
+      }, 10000);
+    }
+  };
+
   return (
     <div className={styles.page}>
       {/* Hero Section */}
@@ -36,19 +97,25 @@ export default function Home() {
           
           <div className={styles.serviceGrid}>
             <div className={styles.serviceCard}>
-              <div className={styles.serviceIcon}>🤖</div>
-              <h3>Logic AI Training</h3>
+              <div className={styles.serviceIcon}>🎓</div>
+              <h3>
+                <a href="#training" style={{textDecoration: 'none', color: 'inherit', cursor: 'pointer'}}>
+                  Professional Training
+                </a>
+              </h3>
               <p>
-                Empower your team with advanced AI training programs. We teach practical 
-                applications of artificial intelligence, machine learning, and logical reasoning 
-                to solve real-world problems.
+                Comprehensive training programs designed to upskill your team with cutting-edge 
+                technologies and methodologies. From AI concepts to DevOps practices, we provide 
+                hands-on learning experiences that drive real-world results.
               </p>
               <ul className={styles.serviceList}>
-                <li>AI Fundamentals & Best Practices</li>
-                <li>Machine Learning Implementation</li>
-                <li>Custom AI Model Development</li>
-                <li>Hands-on Project Training</li>
+                <li>AI Concepts & Machine Learning</li>
+                <li>AI-Powered Product Development & Testing</li>
+                <li>DevOps & CI/CD Pipeline</li>
+                <li>Test Automation & Quality Assurance</li>
+                <li>Git, Docker & Kubernetes</li>
               </ul>
+              <a href="#training" className={styles.viewCoursesBtn}>View All Courses →</a>
             </div>
 
             <div className={styles.serviceCard}>
@@ -79,6 +146,222 @@ export default function Home() {
                 <li>Quality Assurance Consulting</li>
                 <li>Process Automation</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Training Courses Section */}
+      <section id="training" className={styles.training}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Professional Training Courses</h2>
+          <p className={styles.sectionSubtitle}>Explore our comprehensive training programs with detailed course brochures</p>
+          
+          <div className={styles.courseGrid}>
+            {/* Course 1 */}
+            <div className={styles.courseCard}>
+              <div className={styles.courseHeader}>
+                <div className={styles.courseBadge}>Advanced</div>
+                <h3>Advanced DevOps with Kubernetes and Docker</h3>
+              </div>
+              <p className={styles.courseDescription}>
+                Master advanced Kubernetes and Docker concepts including Helm charts, observability, 
+                monitoring, and enterprise-grade container orchestration practices.
+              </p>
+              <ul className={styles.courseFeatures}>
+                <li>Advanced Kubernetes Architecture</li>
+                <li>Docker Multi-stage Builds & Optimization</li>
+                <li>Helm Charts & Package Management</li>
+                <li>Observability & Monitoring Tools</li>
+                <li>Production Best Practices</li>
+              </ul>
+              <a 
+                href={`${basePath}/brochures/advanced-devops-kubernetes-docker.pdf`} 
+                download
+                className={styles.downloadBtn}
+              >
+                📥 Download Brochure
+              </a>
+            </div>
+
+            {/* Course 2 */}
+            <div className={styles.courseCard}>
+              <div className={styles.courseHeader}>
+                <div className={styles.courseBadge} style={{background: '#8DC63F'}}>Fresher Program</div>
+                <h3>College to Corporate – DevOps Cloud Accelerator</h3>
+              </div>
+              <p className={styles.courseDescription}>
+                Perfect for freshers! Learn DevOps fundamentals from scratch including Git, Docker, 
+                Kubernetes, and observability with Grafana. Get job-ready with hands-on projects.
+              </p>
+              <ul className={styles.courseFeatures}>
+                <li>Git Version Control Basics</li>
+                <li>Docker Fundamentals & Containerization</li>
+                <li>Kubernetes Essentials</li>
+                <li>Grafana & Observability</li>
+                <li>Real-world DevOps Projects</li>
+              </ul>
+              <a 
+                href={`${basePath}/brochures/college-to-corporate-devops.pdf`} 
+                download
+                className={styles.downloadBtn}
+              >
+                📥 Download Brochure
+              </a>
+            </div>
+
+            {/* Course 3 */}
+            <div className={styles.courseCard}>
+              <div className={styles.courseHeader}>
+                <div className={styles.courseBadge} style={{background: '#6FB33F'}}>Beginner</div>
+                <h3>Basics of Python for Beginners</h3>
+              </div>
+              <p className={styles.courseDescription}>
+                Start your programming journey with Python! Learn fundamental concepts and understand 
+                how Python is used in organizations for automation, data analysis, and development.
+              </p>
+              <ul className={styles.courseFeatures}>
+                <li>Python Syntax & Data Types</li>
+                <li>Control Flow & Functions</li>
+                <li>Object-Oriented Programming</li>
+                <li>File Handling & Libraries</li>
+                <li>Real-world Python Applications</li>
+              </ul>
+              <a 
+                href={`${basePath}/brochures/basics-of-python.pdf`} 
+                download
+                className={styles.downloadBtn}
+              >
+                📥 Download Brochure
+              </a>
+            </div>
+
+            {/* Course 4 */}
+            <div className={styles.courseCard}>
+              <div className={styles.courseHeader}>
+                <div className={styles.courseBadge} style={{background: '#1B4965'}}>Complete Program</div>
+                <h3>Beginner QA Engineer Training Programme</h3>
+              </div>
+              <p className={styles.courseDescription}>
+                Comprehensive QA training covering testing fundamentals, requirement analysis, manual 
+                and automation testing (Web, Android, API), non-functional testing, and security scans.
+              </p>
+              <ul className={styles.courseFeatures}>
+                <li>Testing Fundamentals & SDLC</li>
+                <li>Requirement Analysis & Test Generation</li>
+                <li>Manual & Automation Testing</li>
+                <li>Web, Android & API Testing</li>
+                <li>Security Scans & Code Quality</li>
+              </ul>
+              <a 
+                href={`${basePath}/brochures/beginner-qa-engineer-training.pdf`} 
+                download
+                className={styles.downloadBtn}
+              >
+                📥 Download Brochure
+              </a>
+            </div>
+          </div>
+
+          {/* Course Registration Form */}
+          <div id="registration" className={styles.registrationSection}>
+            <div className={styles.registrationCard}>
+              <h3 className={styles.registrationTitle}>Register for a Course</h3>
+              <p className={styles.registrationSubtitle}>
+                Interested in any of our training programs? Fill out the form below and we'll get back to you.
+              </p>
+
+              {formStatus === 'success' && (
+                <div className={styles.successMessage}>
+                  ✅ Response recorded! Our executive will contact you with more details shortly.
+                </div>
+              )}
+
+              {formStatus === 'error' && (
+                <div className={styles.errorMessage}>
+                  ❌ Please select at least one course and fill all required fields.
+                </div>
+              )}
+
+              <form 
+                className={styles.registrationForm}
+                action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdak2jiT3wdZtX8G_-nImaD_UwZd9zVp3D_wVWherrwF6FWZQ/formResponse"
+                method="POST"
+                onSubmit={handleSubmit}
+              >
+                <div className={styles.formGroup}>
+                  <label htmlFor="fullName">Full Name *</label>
+                  <input 
+                    type="text" 
+                    id="fullName"
+                    name="entry.357958668"
+                    placeholder="Enter your full name" 
+                    className={styles.input}
+                    required 
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="email">Email Address *</label>
+                  <input 
+                    type="email" 
+                    id="email"
+                    name="entry.1303140709"
+                    placeholder="your.email@example.com" 
+                    className={styles.input}
+                    required 
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="phone">Contact Number *</label>
+                  <input 
+                    type="tel" 
+                    id="phone"
+                    name="entry.703271522"
+                    placeholder="+91 XXXXX XXXXX" 
+                    className={styles.input}
+                    required 
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Select Courses * (You can select multiple)</label>
+                  <div className={styles.checkboxGroup}>
+                    <label className={styles.checkboxLabel}>
+                      <input type="checkbox" name="entry.1618973613" value="Advanced DevOps with Kubernetes and Docker" />
+                      <span>Advanced DevOps with Kubernetes and Docker</span>
+                    </label>
+                    <label className={styles.checkboxLabel}>
+                      <input type="checkbox" name="entry.1618973613" value="College to Corporate – DevOps Cloud Accelerator" />
+                      <span>College to Corporate – DevOps Cloud Accelerator</span>
+                    </label>
+                    <label className={styles.checkboxLabel}>
+                      <input type="checkbox" name="entry.1618973613" value="Basics of Python for Beginners" />
+                      <span>Basics of Python for Beginners</span>
+                    </label>
+                    <label className={styles.checkboxLabel}>
+                      <input type="checkbox" name="entry.1618973613" value="Beginner QA Engineer Training Programme" />
+                      <span>Beginner QA Engineer Training Programme</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="message">Additional Message (Optional)</label>
+                  <textarea 
+                    id="message"
+                    name="entry.1935181999"
+                    placeholder="Any questions or specific requirements?" 
+                    className={styles.textarea}
+                    rows="3"
+                  ></textarea>
+                </div>
+
+                <button type="submit" className={styles.registerBtn}>
+                  Register Now
+                </button>
+              </form>
             </div>
           </div>
         </div>
