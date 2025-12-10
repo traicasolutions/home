@@ -7,6 +7,7 @@ const basePath = process.env.NODE_ENV === 'production' ? '/traica-solutions-page
 
 export default function Home() {
   const [formStatus, setFormStatus] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,10 +18,8 @@ export default function Home() {
     const selectedCourses = formData.getAll('entry.1618973613');
     if (selectedCourses.length === 0) {
       setFormStatus('error');
-      document.getElementById('registration')?.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
+      // Scroll modal to top to show error message
+      document.querySelector(`.${styles.modalContent}`)?.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => {
         setFormStatus('');
       }, 5000);
@@ -39,25 +38,18 @@ export default function Home() {
       setFormStatus('success');
       form.reset();
 
-      // Scroll to the registration section to show the message
-      document.getElementById('registration')?.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
+      // Scroll modal to top to show success message
+      document.querySelector(`.${styles.modalContent}`)?.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // Hide message after 15 seconds
+      // Hide message and close modal after 3 seconds
       setTimeout(() => {
         setFormStatus('');
-      }, 15000);
+        setShowModal(false);
+      }, 3000);
     } catch (error) {
       setFormStatus('error');
-      
-      // Scroll to show error message
-      document.getElementById('registration')?.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-
+      // Scroll modal to top to show error message
+      document.querySelector(`.${styles.modalContent}`)?.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => {
         setFormStatus('');
       }, 10000);
@@ -83,7 +75,8 @@ export default function Home() {
             Empowering innovation through Logic AI training, IT development, and intelligent test automation
           </p>
           <div className={styles.heroCta}>
-            <a href="#contact" className={styles.primaryBtn}>Get Started</a>
+            <button onClick={() => setShowModal(true)} className={styles.primaryBtn}>Register for Course</button>
+            <a href="#contact" className={styles.secondaryBtn}>Get Started</a>
             <a href="#services" className={styles.secondaryBtn}>Learn More</a>
           </div>
         </div>
@@ -262,108 +255,6 @@ export default function Home() {
               </a>
             </div>
           </div>
-
-          {/* Course Registration Form */}
-          <div id="registration" className={styles.registrationSection}>
-            <div className={styles.registrationCard}>
-              <h3 className={styles.registrationTitle}>Register for a Course</h3>
-              <p className={styles.registrationSubtitle}>
-                Interested in any of our training programs? Fill out the form below and we'll get back to you.
-              </p>
-
-              {formStatus === 'success' && (
-                <div className={styles.successMessage}>
-                  ✅ Response recorded! Our executive will contact you with more details shortly.
-                </div>
-              )}
-
-              {formStatus === 'error' && (
-                <div className={styles.errorMessage}>
-                  ❌ Please select at least one course and fill all required fields.
-                </div>
-              )}
-
-              <form 
-                className={styles.registrationForm}
-                action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdak2jiT3wdZtX8G_-nImaD_UwZd9zVp3D_wVWherrwF6FWZQ/formResponse"
-                method="POST"
-                onSubmit={handleSubmit}
-              >
-                <div className={styles.formGroup}>
-                  <label htmlFor="fullName">Full Name *</label>
-                  <input 
-                    type="text" 
-                    id="fullName"
-                    name="entry.357958668"
-                    placeholder="Enter your full name" 
-                    className={styles.input}
-                    required 
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="email">Email Address *</label>
-                  <input 
-                    type="email" 
-                    id="email"
-                    name="entry.1303140709"
-                    placeholder="your.email@example.com" 
-                    className={styles.input}
-                    required 
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="phone">Contact Number *</label>
-                  <input 
-                    type="tel" 
-                    id="phone"
-                    name="entry.703271522"
-                    placeholder="+91 XXXXX XXXXX" 
-                    className={styles.input}
-                    required 
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label>Select Courses * (You can select multiple)</label>
-                  <div className={styles.checkboxGroup}>
-                    <label className={styles.checkboxLabel}>
-                      <input type="checkbox" name="entry.1618973613" value="Advanced DevOps with Kubernetes and Docker" />
-                      <span>Advanced DevOps with Kubernetes and Docker</span>
-                    </label>
-                    <label className={styles.checkboxLabel}>
-                      <input type="checkbox" name="entry.1618973613" value="College to Corporate – DevOps Cloud Accelerator" />
-                      <span>College to Corporate – DevOps Cloud Accelerator</span>
-                    </label>
-                    <label className={styles.checkboxLabel}>
-                      <input type="checkbox" name="entry.1618973613" value="Basics of Python for Beginners" />
-                      <span>Basics of Python for Beginners</span>
-                    </label>
-                    <label className={styles.checkboxLabel}>
-                      <input type="checkbox" name="entry.1618973613" value="Beginner QA Engineer Training Programme" />
-                      <span>Beginner QA Engineer Training Programme</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="message">Additional Message (Optional)</label>
-                  <textarea 
-                    id="message"
-                    name="entry.1935181999"
-                    placeholder="Any questions or specific requirements?" 
-                    className={styles.textarea}
-                    rows="3"
-                  ></textarea>
-                </div>
-
-                <button type="submit" className={styles.registerBtn}>
-                  Register Now
-                </button>
-              </form>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -411,66 +302,35 @@ export default function Home() {
           <p className={styles.sectionSubtitle}>
             Ready to transform your business with AI and automation?
           </p>
-          <div className={styles.contactContent}>
-            <div className={styles.contactInfo}>
-              <div className={styles.contactItem}>
-                <span className={styles.contactIcon}>📧</span>
-                <div>
-                  <h4>Email</h4>
-                  <p>info@tricasolutions.com</p>
-                </div>
-              </div>
-              <div className={styles.contactItem}>
-                <span className={styles.contactIcon}>📍</span>
-                <div>
-                  <h4>Location</h4>
-                  <p>Bengaluru, India</p>
-                  <p className={styles.subText}>Remote & On-site Services Available</p>
-                </div>
-              </div>
-              <div className={styles.contactItem}>
-                <span className={styles.contactIcon}>🔗</span>
-                <div>
-                  <h4>Connect With Us</h4>
-                  <div className={styles.socialLinks}>
-                    <a href="https://linkedin.com/company/trica-solutions" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>LinkedIn</a>
-                    <a href="https://twitter.com/tricasolutions" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>Twitter</a>
-                    <a href="https://github.com/trica-solutions" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>GitHub</a>
-                  </div>
-                </div>
+          <div className={styles.contactInfo}>
+            <div className={styles.contactItem}>
+              <span className={styles.contactIcon}>📧</span>
+              <div>
+                <h4>Email</h4>
+                <p>traicasolutions@gmail.com</p>
               </div>
             </div>
-            <div className={styles.contactForm}>
-              <form>
-                <input 
-                  type="text" 
-                  placeholder="Your Name" 
-                  className={styles.input}
-                  required 
-                />
-                <input 
-                  type="email" 
-                  placeholder="Your Email" 
-                  className={styles.input}
-                  required 
-                />
-                <select className={styles.input}>
-                  <option>Select Service Interest</option>
-                  <option>AI Training</option>
-                  <option>IT Development</option>
-                  <option>Testing & Automation</option>
-                  <option>All Services</option>
-                </select>
-                <textarea 
-                  placeholder="Tell us about your project..." 
-                  className={styles.textarea}
-                  rows="4"
-                  required
-                ></textarea>
-                <button type="submit" className={styles.submitBtn}>
-                  Send Message
-                </button>
-              </form>
+            <div className={styles.contactItem}>
+              <span className={styles.contactIcon}>📞</span>
+              <div>
+                <h4>Phone</h4>
+                <p>+91 63643 78919</p>
+              </div>
+            </div>
+            <div className={styles.contactItem}>
+              <span className={styles.contactIcon}>📍</span>
+              <div>
+                <h4>Location</h4>
+                <p>Bengaluru, India</p>
+                <p className={styles.subText}>Remote & On-site Services Available</p>
+              </div>
+            </div>
+            <div className={styles.contactItem}>
+              <span className={styles.contactIcon}>🔗</span>
+              <div>
+                <h4>Connect With Us</h4>
+                <p>LinkedIn | Twitter</p>
+              </div>
             </div>
           </div>
         </div>
@@ -489,6 +349,114 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Registration Modal */}
+      {showModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeBtn} onClick={() => setShowModal(false)}>
+              ✕
+            </button>
+            
+            <h3 className={styles.modalTitle}>Register for a Course</h3>
+            <p className={styles.modalSubtitle}>
+              Interested in any of our training programs? Fill out the form below and we'll get back to you.
+            </p>
+
+            {formStatus === 'success' && (
+              <div className={styles.successMessage}>
+                ✅ Response recorded! Our executive will contact you with more details shortly.
+              </div>
+            )}
+
+            {formStatus === 'error' && (
+              <div className={styles.errorMessage}>
+                ❌ Please select at least one course and fill all required fields.
+              </div>
+            )}
+
+            <form 
+              className={styles.registrationForm}
+              action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdak2jiT3wdZtX8G_-nImaD_UwZd9zVp3D_wVWherrwF6FWZQ/formResponse"
+              method="POST"
+              onSubmit={handleSubmit}
+            >
+              <div className={styles.formGroup}>
+                <label htmlFor="fullName">Full Name *</label>
+                <input 
+                  type="text" 
+                  id="fullName"
+                  name="entry.357958668"
+                  placeholder="Enter your full name" 
+                  className={styles.input}
+                  required 
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="email">Email Address *</label>
+                <input 
+                  type="email" 
+                  id="email"
+                  name="entry.1303140709"
+                  placeholder="your.email@example.com" 
+                  className={styles.input}
+                  required 
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="phone">Contact Number *</label>
+                <input 
+                  type="tel" 
+                  id="phone"
+                  name="entry.703271522"
+                  placeholder="+91 XXXXX XXXXX" 
+                  className={styles.input}
+                  required 
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Select Courses * (You can select multiple)</label>
+                <div className={styles.checkboxGroup}>
+                  <label className={styles.checkboxLabel}>
+                    <input type="checkbox" name="entry.1618973613" value="Advanced DevOps with Kubernetes and Docker" />
+                    <span>Advanced DevOps with Kubernetes and Docker</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input type="checkbox" name="entry.1618973613" value="College to Corporate – DevOps Cloud Accelerator" />
+                    <span>College to Corporate – DevOps Cloud Accelerator</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input type="checkbox" name="entry.1618973613" value="Basics of Python for Beginners" />
+                    <span>Basics of Python for Beginners</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input type="checkbox" name="entry.1618973613" value="Beginner QA Engineer Training Programme" />
+                    <span>Beginner QA Engineer Training Programme</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="message">Additional Message (Optional)</label>
+                <textarea 
+                  id="message"
+                  name="entry.1935181999"
+                  placeholder="Any questions or specific requirements?" 
+                  className={styles.textarea}
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <button type="submit" className={styles.registerBtn}>
+                Register Now
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
