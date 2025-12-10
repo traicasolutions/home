@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/traica-solutions-page' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/home' : '',
 };
 
 export default nextConfig;

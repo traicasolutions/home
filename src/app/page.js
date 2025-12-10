@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from "./page.module.css";
 
-const basePath = process.env.NODE_ENV === 'production' ? '/traica-solutions-page' : '';
+const basePath = process.env.NODE_ENV === 'production' ? '/home' : '';
 
 export default function Home() {
   const [formStatus, setFormStatus] = useState('');
