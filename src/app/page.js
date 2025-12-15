@@ -64,7 +64,7 @@ export default function Home() {
           <div className={styles.logoContainer}>
             <img 
               src={`${basePath}/logo.png`}
-              alt="Trica Solutions Logo" 
+              alt="Traica Solutions Logo" 
               className={styles.logoImage}
             />
           </div>
@@ -340,7 +340,7 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={styles.container}>
           <div className={styles.footerContent}>
-            <p>&copy; 2025 Trica Solutions. All rights reserved. The Logical Path to Solutions.</p>
+            <p>&copy; 2025 Traica Solutions. All rights reserved. The Logical Path to Solutions.</p>
             <div className={styles.footerLinks}>
               <a href="#privacy" className={styles.footerLink}>Privacy Policy</a>
               <span className={styles.footerDivider}>•</span>
