@@ -12,8 +12,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Trica Solutions - The Logical Path to Solutions",
+  title: "Traica Solutions - The Logical Path to Solutions",
   description: "Empowering innovation through Logic AI training, IT development, and intelligent test automation. Your trusted partner for AI education and software solutions.",
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -23,6 +26,8 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="color-scheme" content="light" />
         <meta name="theme-color" content="#ffffff" />
+        <link rel="icon" href="public/logo.png" type="image/png" />
+        <link rel="shortcut icon" href="/logo.png" type="image/png" />
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
         <script
