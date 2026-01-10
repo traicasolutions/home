@@ -56,7 +56,7 @@ export default function Home() {
 
   useEffect(() => {
     if (slides.length > 0) {
-      const t = setInterval(() => setCurrentSlide((s) => (s + 1) % slides.length), 4500);
+      const t = setInterval(() => setCurrentSlide((s) => (s + 1) % slides.length), 8000);
       return () => clearInterval(t);
     }
   }, [slides]);
@@ -145,15 +145,14 @@ export default function Home() {
             // Show yoga.png as default placeholder while ads load
             (slides.length > 0 ? slides : [{ src: `${basePath}/ads/yoga.png`, alt: 'yoga', href: '#', caption: 'yoga', contain: true }])
           ).map((slide, idx) => (
-            <a
+            <button
               key={idx}
-              href={slide.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => setShowModal(true)}
               className={`${styles.slide} ${idx === currentSlide ? styles.active : ''}`}
+              style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer', width: '100%', height: '100%' }}
             >
               <img src={slide.src} alt={slide.alt} className={`${styles.slideImage} ${slide.contain ? styles.slideContain : ''}`} />
-            </a>
+            </button>
           ))}
 
           <div className={styles.dots}>
