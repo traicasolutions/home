@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from "./page.module.css";
 
 const basePath = process.env.NODE_ENV === 'production' ? '/home' : '';
@@ -8,6 +8,63 @@ const basePath = process.env.NODE_ENV === 'production' ? '/home' : '';
 export default function Home() {
   const [formStatus, setFormStatus] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides, setSlides] = useState([]);
+
+  // Load ad files from `/public/ads` via the server API. Falls back to a small hardcoded list on error.
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadAds() {
+      try {
+        // Fetch the static JSON file generated from the public/ads folder.
+        const res = await fetch('/ads/ads.json');
+        if (!res.ok) throw new Error(`Static list not found: ${res.status}`);
+        const files = await res.json();
+
+        const adFiles = Array.isArray(files)
+          ? files.filter((f) => /\.(png|jpe?g|svg)$/i.test(f))
+          : [];
+
+        const slidesList = adFiles.map((img) => ({
+          src: `${basePath}/ads/${img}`,
+          alt: img.replace(/\.[^.]+$/, ''),
+          href: '#',
+          caption: img.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '),
+          contain: true,
+        }));
+
+        if (mounted) setSlides(slidesList);
+      } catch (err) {
+        console.error('Failed to load static ads list:', err.message);
+        // Fallback to a minimal set so the UI still shows something
+        const fallback = ['yoga.png', 'AdvancedK8s.svg', 'AdvancedGitOps.svg'];
+        const slidesList = fallback.map((img) => ({
+          src: `${basePath}/ads/${img}`,
+          alt: img.replace(/\.[^.]+$/, ''),
+          href: '#',
+          caption: img.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '),
+          contain: true,
+        }));
+        if (mounted) setSlides(slidesList);
+      }
+    }
+
+    loadAds();
+    return () => { mounted = false; };
+  }, []);
+
+  useEffect(() => {
+    if (slides.length > 0) {
+      const t = setInterval(() => setCurrentSlide((s) => (s + 1) % slides.length), 4500);
+      return () => clearInterval(t);
+    }
+  }, [slides]);
+
+  // Reset to first slide when slides change to avoid out-of-range index
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [slides.length]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +138,40 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Advertising / Slideshow Banner */}
+      <section className={styles.adBanner} aria-label="Advertisement">
+        <div className={styles.slideshow}>
+          {(
+            // Show yoga.png as default placeholder while ads load
+            (slides.length > 0 ? slides : [{ src: `${basePath}/ads/yoga.png`, alt: 'yoga', href: '#', caption: 'yoga', contain: true }])
+          ).map((slide, idx) => (
+            <a
+              key={idx}
+              href={slide.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.slide} ${idx === currentSlide ? styles.active : ''}`}
+            >
+              <img src={slide.src} alt={slide.alt} className={`${styles.slideImage} ${slide.contain ? styles.slideContain : ''}`} />
+            </a>
+          ))}
 
+          <div className={styles.dots}>
+            {(slides.length > 0 ? slides : [{ src: `${basePath}/ads/yoga.png` }]).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurrentSlide(idx);
+                }}
+                className={`${styles.dot} ${idx === currentSlide ? styles.dotActive : ''}`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+      
       {/* Services Section */}
       <section id="services" className={styles.services}>
         <div className={styles.container}>

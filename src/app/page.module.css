@@ -6,7 +6,8 @@
 
 /* Hero Section */
 .hero {
-  min-height: 90vh;
+  /* Reduced height so the ad slideshow is visible without scrolling at 100% zoom */
+  min-height: 48vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,30 +42,140 @@
 }
 
 .heroContent {
-  max-width: 900px;
+  max-width: 850px;
   z-index: 1;
   position: relative;
+  padding: 0 1rem;
 }
 
 .logoContainer {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: center;
 }
 
 .logoImage {
   width: 100%;
-  max-width: 450px;
+  max-width: 250px;
   height: auto;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.16));
 }
 
-.heroTitle {
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 1.5rem;
-  font-weight: 700;
-  line-height: 1.2;
+/* Advertising / Slideshow Styles */
+.adBanner {
+  padding: 2rem 1rem;
+  background: linear-gradient(90deg, rgba(27,73,101,0.03), rgba(141,198,63,0.02));
 }
+
+.slideshow {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(11, 30, 40, 0.06);
+  border: 1px solid rgba(27,73,101,0.06);
+  background: white;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+}
+
+.slideContain {
+  object-fit: contain;
+  background: linear-gradient(180deg, #002245, #002245);
+}
+
+
+
+.dots {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  border: 2px solid rgba(27,73,101,0.12);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.dot:hover { transform: scale(1.1); }
+
+.dotActive {
+  background: rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.08);
+}
+
+@media (max-width: 768px) {
+  .adBanner {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .slideshow { 
+    height: 160px;
+    margin: 0 auto;
+  }
+
+  .slideCaption { 
+    left: 12px; 
+    bottom: 10px; 
+    font-size: 0.85rem; 
+    padding: 0.4rem 0.7rem;
+  }
+
+  .dots {
+    right: 12px;
+    bottom: 10px;
+  }
+}
+
+
+.heroTitle {
+  /* Title now smaller than logo for better visual hierarchy */
+  font-size: clamp(.75rem, .75vw, 1rem);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* IT YOGA Promo Styles */
+/* promo section removed; IT YOGA now included as a slideshow slide */
 
 .highlight {
   background: linear-gradient(to right, #8DC63F, #6FB33F);
@@ -74,8 +185,9 @@
 }
 
 .heroSubtitle {
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
-  margin-bottom: 2.5rem;
+  /* Subtitle smaller than the title and succinct */
+  font-size: clamp(.75rem, .75vw, 1rem);
+  margin-bottom: 1rem;
   opacity: 0.95;
   max-width: 700px;
   margin-left: auto;
@@ -84,18 +196,18 @@
 
 .heroCta {
   display: flex;
-  gap: 1.5rem;
+  gap: .5rem;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .primaryBtn,
 .secondaryBtn {
-  padding: 1rem 2.5rem;
+  padding: 0.4rem 1.0rem;
   border-radius: 8px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.22s ease;
   display: inline-block;
 }
 
@@ -106,7 +218,7 @@
 
 .primaryBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(27, 73, 101, 0.3);
+  box-shadow: 0 8px 20px rgba(27, 73, 101, 0.22);
 }
 
 .secondaryBtn {
