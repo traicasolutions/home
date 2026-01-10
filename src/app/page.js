@@ -430,7 +430,7 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={styles.container}>
           <div className={styles.footerContent}>
-            <p>&copy; 2025 ca Solutions. All rights reserved. The Logical Path to Solutions.</p>
+            <p>&copy; 2025 Traica Solutions. All rights reserved. The Logical Path to Solutions.</p>
             <div className={styles.footerLinks}>
               <a href="#privacy" className={styles.footerLink}>Privacy Policy</a>
               <span className={styles.footerDivider}>•</span>
