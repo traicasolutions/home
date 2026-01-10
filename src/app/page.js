@@ -18,7 +18,7 @@ export default function Home() {
     async function loadAds() {
       try {
         // Fetch the static JSON file generated from the public/ads folder.
-        const res = await fetch('/ads/ads.json');
+        const res = await fetch(`${basePath}/ads/ads.json`);
         if (!res.ok) throw new Error(`Static list not found: ${res.status}`);
         const files = await res.json();
 
@@ -38,7 +38,7 @@ export default function Home() {
       } catch (err) {
         console.error('Failed to load static ads list:', err.message);
         // Fallback to a minimal set so the UI still shows something
-        const fallback = ['yoga.png', 'AdvancedK8s.svg', 'AdvancedGitOps.svg'];
+        const fallback = ['1_yoga.png', 'AdvancedK8s.png', 'AdvancedGitOPs.png'];
         const slidesList = fallback.map((img) => ({
           src: `${basePath}/ads/${img}`,
           alt: img.replace(/\.[^.]+$/, ''),
