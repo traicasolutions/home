@@ -511,8 +511,16 @@ export default function Home() {
                 <label>Select Courses * (You can select multiple)</label>
                 <div className={styles.checkboxGroup}>
                   <label className={styles.checkboxLabel}>
+                    <input type="checkbox" name="entry.1618973613" value="IT YOGA Subscription" />
+                    <span>IT YOGA Subscription</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
                     <input type="checkbox" name="entry.1618973613" value="Advanced DevOps with Kubernetes and Docker" />
                     <span>Advanced DevOps with Kubernetes and Docker</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input type="checkbox" name="entry.1618973613" value="GitOps Training Program" />
+                    <span>GitOps Training Program</span>
                   </label>
                   <label className={styles.checkboxLabel}>
                     <input type="checkbox" name="entry.1618973613" value="College to Corporate – DevOps Cloud Accelerator" />
